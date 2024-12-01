@@ -1,13 +1,19 @@
+from collections import defaultdict
+
+
 def main():
     try:
         arr1, arr2 = transform_input("./input.txt")
-        arr1.sort()
-        arr2.sort()
+        num_map = defaultdict(int)
 
-        total_difference = sum(abs(a - b) for a, b in zip(arr1, arr2))
-        print(total_difference)
+        for num in arr2:
+            num_map[num] += 1
+
+        result = sum(num * num_map[num] for num in arr1 if num in num_map)
+
+        print(result)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An unexpected error occurred: {e}")
 
 
 def transform_input(file: str) -> tuple[list[int], list[int]]:
