@@ -1,27 +1,28 @@
 def main():
-    (arr1, arr2) = transformInput("./input.txt")
-    arr1.sort()
-    arr2.sort()
-    sum = 0
-    for i in range(len(arr1)):
-        diff = abs(arr1[i] - arr2[i])
-        sum += diff
-    print(sum)
+    try:
+        arr1, arr2 = transform_input("./input.txt")
+        arr1.sort()
+        arr2.sort()
+
+        total_difference = sum(abs(a - b) for a, b in zip(arr1, arr2))
+        print(total_difference)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
-def transformInput(file: str) -> tuple[list[int], list[int]]:
-    arr1 = []
-    arr2 = []
+def transform_input(file: str) -> tuple[list[int], list[int]]:
     with open(file, "r") as txt:
-        for line in txt:
-            values = line.split()
-            if len(values) > 2:
-                raise Exception("Input invalid!")
-            arr1.append(int(values[0]))
-            arr2.append(int(values[1]))
-        if len(arr1) != len(arr2):
-            raise Exception("Array lengths do not match")
-        return (arr1, arr2)
+        data = [line.split() for line in txt]
+
+    if any(len(values) != 2 for values in data):
+        raise ValueError("Each line must contain exactly two integers")
+
+    try:
+        arr1, arr2 = zip(*(map(int, values) for values in data))
+    except ValueError:
+        raise ValueError("File contains non-integer values")
+
+    return list(arr1), list(arr2)
 
 
 if __name__ == "__main__":
