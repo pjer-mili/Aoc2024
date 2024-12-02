@@ -1,4 +1,5 @@
 import itertools as it
+import timeit
 
 
 def main():
@@ -23,5 +24,10 @@ def isReportSafe(report: list[int]) -> bool:
     return all(1 <= d <= 3 for d in diffs) or all(-3 <= d <= -1 for d in diffs)
 
 
+def benchmark():
+    execution_time = timeit.timeit("main()", globals=globals(), number=1)
+    print(f"Benchmark: {execution_time:.6f} seconds")
+
+
 if __name__ == "__main__":
-    main()
+    benchmark()
