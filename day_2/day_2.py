@@ -14,16 +14,6 @@ def getDataFromFile(file: str) -> list[int]:
 
 
 def isReportSafe(report: list[int]) -> bool:
-    return all(
-        (isDiffInRange(report[i], report[i + 1])) and report[i] < report[i + 1]
-        for i in range(len(report) - 1)
-    ) or all(
-        (isDiffInRange(report[i], report[i + 1])) and report[i] > report[i + 1]
-        for i in range(len(report) - 1)
-    )
-
-
-def traverseReport(report: list[int]) -> bool:
     ascending = report[0] < report[1]
     compare = (lambda x, y: x < y) if ascending else (lambda x, y: x > y)
     for i in range(len(report) - 1):
