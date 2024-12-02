@@ -1,5 +1,5 @@
 def main():
-    data = getDataFromFile("./input.txt")
+    data = getDataFromFile("./test_input.txt")
     safeCount = 0
     for report in data:
         if isReportSafe(report):
@@ -21,6 +21,18 @@ def isReportSafe(report: list[int]) -> bool:
         (isDiffInRange(report[i], report[i + 1])) and report[i] > report[i + 1]
         for i in range(len(report) - 1)
     )
+
+
+def traverseReport(report: list[int]) -> bool:
+    ascending = report[0] < report[1]
+    compare = (lambda x, y: x < y) if ascending else (lambda x, y: x > y)
+    for i in range(len(report) - 1):
+        if not (
+            compare(report[i], report[i + 1])
+            and isDiffInRange(report[i], report[i + 1])
+        ):
+            return False
+    return True
 
 
 def isDiffInRange(a: int, b: int) -> bool:
