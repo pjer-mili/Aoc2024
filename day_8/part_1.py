@@ -3,7 +3,7 @@ from itertools import combinations
 
 
 def main():
-    with open("input.txt", "r") as file:
+    with open("test_input.txt", "r") as file:
         matrix = file.read().strip().split("\n")
 
     pairs_dict = generate_pairs(matrix)
@@ -17,23 +17,29 @@ def main():
 def get_possible_antinodes(
     pair: tuple[tuple[int, int], tuple[int, int]], n, m, antinodes_set: set
 ):
-    a, b = pair
+    origin_a, origin_b = pair
 
+    a, b = origin_a, origin_b
+
+    c, found_1 = calculate_coord(a, b, n, m)
+    if found_1:
+        antinodes_set.add(c)
+
+    d, found_2 = calculate_coord(b, a, n, m)
+    if found_2:
+        antinodes_set.add(d)
+
+
+def calculate_coord(a: tuple[int, int], b: tuple[int, int], n, m):
     x1, y1 = a
     x2, y2 = b
-    antinodes_count = 0
 
-    c_x = x2 + (x2 - x1)
-    c_y = y2 + (y2 - y1)
-    if in_bounds(c_x, c_y, n, m):
-        antinodes_set.add((c_x, c_y))
+    new_x = x2 + (x2 - x1)
+    new_y = y2 + (y2 - y1)
+    if in_bounds(new_x, new_y, n, m):
+        return (new_x, new_y), True
 
-    d_x = x1 + (x1 - x2)
-    d_y = y1 + (y1 - y2)
-    if in_bounds(d_x, d_y, n, m):
-        antinodes_set.add((d_x, d_y))
-
-    return antinodes_count
+    return {}, False
 
 
 def in_bounds(i, j, n, m):
