@@ -4,7 +4,7 @@ def main():
     n, m = len(lab), len(lab[0])
     start_i, start_j = find_start(lab, n, m)
 
-    visited_positions = calculate_guard_path(lab, start_i, start_j, n, m)
+    visited_positions = calculate_guard_path(lab, start_i, start_j, n, m)[0]
     visited_positions.remove((start_i, start_j))
     loop_count = 0
 
