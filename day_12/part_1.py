@@ -29,23 +29,20 @@ def dfs(matrix: list[list[str]]):
                     perimiter += sub_perimiter
         return area, perimiter
 
-    areas = {}
-    perimiters = {}
+    result_dict = {}
+
     for i in range(n):
         for j in range(m):
             if (i, j) not in visited:
                 area, perimiter = dfs_util(i, j, 0, 0)
-                if (matrix[i][j], (i, j)) not in areas:
-                    areas[(matrix[i][j], (i, j))] = 0
-                areas[(matrix[i][j], (i, j))] += area
-
-                if (matrix[i][j], (i, j)) not in perimiters:
-                    perimiters[(matrix[i][j], (i, j))] = 0
-                perimiters[(matrix[i][j], (i, j))] += perimiter
+                if (matrix[i][j], (i, j)) not in result_dict:
+                    result_dict[(matrix[i][j], (i, j))] = [0, 0]
+                result_dict[(matrix[i][j], (i, j))][0] += area
+                result_dict[(matrix[i][j], (i, j))][1] += perimiter
 
     result = 0
-    for key, value in areas.items():
-        result += value * perimiters[key]
+    for key, value in result_dict.items():
+        result += value[0] * value[1]
     print(result)
 
 
